@@ -27,3 +27,16 @@ export function codeHTML(keyPairs = { '*b*': '<b>' }, onString = '') {
     }
     return JSON.stringify(str.join(' '))
 }
+
+export function insertSnippet(
+    snippet = { open: '', close: '' },
+    selectionTXT = '',
+    insertIn = new HTMLTextAreaElement
+) {
+    const [start, end] = [insertIn.selectionStart, insertIn.selectionEnd]
+    const text = insertIn.value
+    const [before, after] = [text.substring(0, start), text.substring(end, text.lenght)]
+    insertIn.value = (before + " " + snippet.open + ' ' + selectionTXT + ' ' + snippet.close + after)
+    insertIn.focus()
+    insertIn.setSelectionRange(start + snippet.open.length + 2, start + snippet.open.length + 2 + selectionTXT.length)
+}
